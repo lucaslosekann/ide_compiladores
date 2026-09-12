@@ -57,6 +57,7 @@ void MainWindow::on_action_Preferences_triggered()
 void MainWindow::on_compile_button_clicked()
 {
     ui->compile_button->setEnabled(false);
+    ui->compiler_output->clear();
     ui->compiler_output->appendPlainText("\n>>Iniciando Compilação<<\n");
 
 
@@ -85,7 +86,7 @@ void MainWindow::on_compile_button_clicked()
     }
 
     const QByteArray sourceCode =
-        ui->code_editor->toPlainText().toUtf8();
+        ui->code_editor->toPlainText().toLatin1();
 
     if (sourceFile.write(sourceCode) != sourceCode.size()) {
         ui->compiler_output->appendPlainText(
@@ -96,9 +97,6 @@ void MainWindow::on_compile_button_clicked()
     }
 
     sourceFile.close();
-
-    //ui->compiler_output->appendPlainText("Código fonte salvo em:\n" +
-    //                                     sourcePath + "\n");
 
     QSettings settings("Compiladores", "IDE");
     QString compiler_path = settings.value("compiler_path", "").toString();

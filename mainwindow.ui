@@ -13,6 +13,39 @@
   <property name="windowTitle">
    <string>IDE Compiladores</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">
+QPlainTextEdit#code_editor {
+    background-color: #202329;
+    color: #e5e9f0;
+    border: 1px solid #343941;
+    border-radius: 4px;
+    padding: 8px;
+    selection-background-color: #3d6599;
+    selection-color: #ffffff;
+    font-family: &quot;JetBrains Mono&quot;, &quot;Fira Code&quot;, &quot;Consolas&quot;, monospace;
+}
+
+QPlainTextEdit#code_editor:focus {
+    border-color: #5b8def;
+}
+
+QPlainTextEdit#compiler_output {
+    background-color: #16181c;
+    color: #c8d3e0;
+    border: 1px solid #343941;
+    border-radius: 4px;
+    padding: 8px;
+    selection-background-color: #3d6599;
+    selection-color: #ffffff;
+    font-family: &quot;JetBrains Mono&quot;, &quot;Fira Code&quot;, &quot;Consolas&quot;, monospace;
+}
+
+QPlainTextEdit#compiler_output:focus {
+    border-color: #5b8def;
+}
+   </string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -29,6 +62,7 @@
       <widget class="QPlainTextEdit" name="code_editor">
        <property name="font">
         <font>
+         <family>JetBrains Mono</family>
          <pointsize>14</pointsize>
         </font>
        </property>
@@ -60,7 +94,7 @@
             <item>
              <widget class="QLabel" name="output_label">
               <property name="text">
-               <string>Saída Compilador</string>
+               <string>Saída do compilador</string>
               </property>
              </widget>
             </item>
@@ -90,7 +124,8 @@
            <widget class="QPlainTextEdit" name="compiler_output">
             <property name="font">
              <font>
-              <pointsize>14</pointsize>
+              <family>JetBrains Mono</family>
+              <pointsize>13</pointsize>
              </font>
             </property>
             <property name="readOnly">
@@ -132,7 +167,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_Preferences">
    <property name="text">
-    <string>Preferencias</string>
+    <string>Preferências</string>
    </property>
   </action>
  </widget>
