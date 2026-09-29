@@ -44,6 +44,23 @@ QPlainTextEdit#compiler_output {
 QPlainTextEdit#compiler_output:focus {
     border-color: #5b8def;
 }
+
+QTableWidget#symbol_table {
+    background-color: #16181c;
+    alternate-background-color: #1c1f24;
+    color: #c8d3e0;
+    gridline-color: #343941;
+    border: 1px solid #343941;
+    selection-background-color: #3d6599;
+    selection-color: #ffffff;
+}
+
+QHeaderView::section {
+    background-color: #202329;
+    color: #e5e9f0;
+    border: 1px solid #343941;
+    padding: 4px;
+}
    </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -121,19 +138,83 @@ QPlainTextEdit#compiler_output:focus {
            </layout>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="compiler_output">
-            <property name="font">
-             <font>
-              <family>JetBrains Mono</family>
-              <pointsize>13</pointsize>
-             </font>
+           <widget class="QTabWidget" name="output_tabs">
+            <property name="currentIndex">
+             <number>0</number>
             </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-            <property name="plainText">
-             <string/>
-            </property>
+            <widget class="QWidget" name="output_tab">
+             <attribute name="title">
+              <string>Saída</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPlainTextEdit" name="compiler_output">
+                <property name="font">
+                 <font>
+                  <family>JetBrains Mono</family>
+                  <pointsize>14</pointsize>
+                 </font>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+                <property name="plainText">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="symbol_table_tab">
+             <attribute name="title">
+              <string>Tabela de Símbolos</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QTableWidget" name="symbol_table">
+                <property name="font">
+                 <font>
+                  <family>JetBrains Mono</family>
+                  <pointsize>14</pointsize>
+                 </font>
+                </property>
+                <property name="editTriggers">
+                 <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
          </layout>

@@ -25,7 +25,11 @@ private slots:
     void on_compile_button_clicked();
 
 private:
+    void setupSymbolTable();
+    void showCompilerOutput();
+
     QProcess compilerProcess;
+    QByteArray compilerOutputBuffer;
     QTemporaryDir buildDirectory;
 
     Ui::MainWindow *ui;
