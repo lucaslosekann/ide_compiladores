@@ -7,6 +7,8 @@
 #include <QProcess>
 #include <QHeaderView>
 #include <QTableWidgetItem>
+#include <QFileDialog>
+#include <QTextStream>
 
 namespace {
 const QStringList SYMBOL_TABLE_COLUMNS = {
@@ -14,6 +16,7 @@ const QStringList SYMBOL_TABLE_COLUMNS = {
     "param", "pos", "vet", "matriz", "ref", "func"
 };
 const QString SYMBOL_LINE_PREFIX = "@TS|";
+const QString ASM_LINE_PREFIX = "@ASM|";
 }
 
 
@@ -85,7 +88,14 @@ void MainWindow::showCompilerOutput()
     QStringList messages;
     ui->symbol_table->setRowCount(0);
 
+    QStringList asmLines;
+
     for (const QString &line : lines) {
+        if (line.startsWith(ASM_LINE_PREFIX)) {
+            asmLines << line.mid(ASM_LINE_PREFIX.size());
+            continue;
+        }
+
         if (!line.startsWith(SYMBOL_LINE_PREFIX)) {
             messages << line;
             continue;
@@ -103,6 +113,33 @@ void MainWindow::showCompilerOutput()
     }
 
     ui->compiler_output->appendPlainText(messages.join('\n').trimmed());
+
+    // Codigo assembly do BIP (so existe quando a compilacao deu certo)
+    ui->asm_output->setPlainText(asmLines.join('\n'));
+    ui->save_asm_button->setEnabled(!asmLines.isEmpty());
+}
+
+void MainWindow::on_save_asm_button_clicked()
+{
+    const QString path = QFileDialog::getSaveFileName(
+        this,
+        tr("Salvar código BIP"),
+        "programa.asm",
+        tr("Assembly BIP (*.asm);;Todos os Arquivos (*)")
+        );
+
+    if (path.isEmpty()) {
+        return;
+    }
+
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
+        ui->compiler_output->appendPlainText("ERRO: Não foi possível salvar o arquivo:\n" + file.errorString());
+        return;
+    }
+
+    QTextStream(&file) << ui->asm_output->toPlainText() << '\n';
+    ui->compiler_output->appendPlainText("Código BIP salvo em " + path);
 }
 
 MainWindow::~MainWindow()
@@ -128,6 +165,8 @@ void MainWindow::on_compile_button_clicked()
     ui->compile_button->setEnabled(false);
     ui->compiler_output->clear();
     ui->symbol_table->setRowCount(0);
+    ui->asm_output->clear();
+    ui->save_asm_button->setEnabled(false);
     compilerOutputBuffer.clear();
     ui->output_tabs->setCurrentWidget(ui->output_tab);
     ui->compiler_output->appendPlainText("\n>>Iniciando Compilação<<\n");

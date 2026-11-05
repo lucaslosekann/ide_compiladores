@@ -24,6 +24,8 @@ private slots:
 
     void on_compile_button_clicked();
 
+    void on_save_asm_button_clicked();
+
 private:
     void setupSymbolTable();
     void showCompilerOutput();
